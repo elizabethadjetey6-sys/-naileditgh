@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nailedit.GH | Book Your Appointment</title>
+<style>
+:root{--cream:#f8f4ed;--gold:#b5965b;--dark:#26231f;--white:#fff;--muted:#756f67;--line:#e5ddd0}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--dark);line-height:1.6}
+header{padding:22px 7%;display:flex;justify-content:space-between;align-items:center;background:rgba(248,244,237,.96);position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}
+.logo{font-family:Georgia,serif;font-size:25px;letter-spacing:1px}.logo span{color:var(--gold)}
+nav a{margin-left:24px;text-decoration:none;color:var(--dark);font-size:14px}
+.btn{display:inline-block;background:var(--dark);color:#fff;padding:13px 22px;border-radius:30px;text-decoration:none;border:0;cursor:pointer}
+.hero{padding:85px 7% 75px;text-align:center;max-width:1000px;margin:auto}
+.eyebrow{color:var(--gold);letter-spacing:3px;text-transform:uppercase;font-size:12px;font-weight:bold}
+h1{font:normal 58px Georgia,serif;line-height:1.08;margin:16px 0}.hero p{max-width:620px;margin:0 auto 28px;color:var(--muted)}
+section{padding:65px 7%;max-width:1200px;margin:auto}h2{font:normal 38px Georgia,serif;margin:0 0 12px}h3{font:normal 23px Georgia,serif;margin:8px 0}.section-intro{color:var(--muted);margin-bottom:30px}
+.policy{background:#fff;border:1px solid var(--line);border-radius:22px;padding:34px}.policy h3{font-size:18px}.policy p,.policy li{color:#5f5a53;font-size:14px}.policy ul{padding-left:20px}
+.category{margin-top:45px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;display:flex;flex-direction:column}.price{font-weight:bold;color:var(--gold);font-size:18px}.duration{font-size:13px;color:var(--muted)}.card p{color:#625d55;font-size:14px}.card .btn{margin-top:auto;text-align:center}
+.booking{background:var(--dark);color:#fff;border-radius:26px;padding:42px}.booking p{color:#d8d2c8}.form{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:25px}.form input,.form select{width:100%;padding:14px;border-radius:10px;border:1px solid #ddd;font:inherit}.form .full{grid-column:1/-1}
+footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+.notice{margin-top:20px;font-size:13px;color:#d8d2c8}
+@media(max-width:700px){nav{display:none}h1{font-size:43px}.grid,.form{grid-template-columns:1fr}.form .full{grid-column:auto}section{padding:45px 5%}.hero{padding:65px 5%}.policy,.booking{padding:25px}}
+</style>
+
+<script src="https://js.paystack.co/v2/inline.js"></script>
+<script>
+  const PAYSTACK_PUBLIC_KEY = "pk_live_73d3651fe712fc014757c34273a26193249f0cf4";
+</script>
+</head>
+<body>
+<header>
+  <div class="logo">Nailedit<span>.GH</span></div>
+  <nav><a href="#policy">Policy</a><a href="#services">Services</a><a href="#book">Book</a></nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="eyebrow">Nails • Lashes • Beauty</div>
+  <h1>Beautiful nails.<br>Beautiful lashes.</h1>
+  <p>Welcome to Nailedit.GH — your beauty appointment, made simple. Choose your service, select a time and secure your appointment.</p>
+  <a class="btn" href="#book">Book an Appointment</a>
+</section>
+
+<section id="policy">
+  <div class="eyebrow">Before you book</div>
+  <h2>Booking Policy</h2>
+  <p class="section-intro">Please read our policies carefully before securing your appointment.</p>
+  <div class="policy">
+    <h3>Appointments</h3>
+    <p>If you cannot find a suitable slot, please call or WhatsApp <strong>0552518871</strong> so we can check if another option is available.</p>
+    <p>If you need additional services such as toes, soak-off or pedicure, please inform us before your appointment so enough time can be allocated.</p>
+    <h3>Payment & Confirmation</h3>
+    <p><strong>NO PAYMENT = NO CONFIRMED APPOINTMENT.</strong> Your appointment is only confirmed once the required payment has been made. Unpaid bookings may be cancelled and the slot released.</p>
+    <p>Online bookings are sent only after a successful Paystack payment. Please keep your Paystack payment reference for your records.</p>
+    <h3>Late Arrivals</h3>
+    <p>A 15-minute grace period is allowed. After 20 minutes, your appointment may be adjusted to fit the remaining time or cancelled. No refund will be given for cancellations caused by excessive lateness.</p>
+    <h3>Cancellation & Rescheduling</h3>
+    <p>Cancellations or rescheduling must be made at least 10 hours before your appointment to avoid losing your payment. Missed appointments and late cancellations may result in the loss of your payment.</p>
+    <h3>Soak-Off</h3>
+    <p>If you have old nail enhancements that need to be removed, please book a soak-off or inform us beforehand. Soak-off is not free and requires additional time. If you require a soak-off, kindly arrive 30 minutes earlier.</p>
+    <h3>Guests & Studio Etiquette</h3>
+    <ul><li>No children or pets are allowed.</li><li>A maximum of one guest is permitted per client.</li><li>Please use earphones/EarPods when watching videos or listening to music.</li><li>Keep phone volume low and take calls quietly.</li><li>We kindly ask everyone to help us maintain a calm studio environment.</li></ul>
+  </div>
+</section>
+
+<section id="services">
+  <div class="eyebrow">Our menu</div>
+  <h2>Services & Pricing</h2>
+  <p class="section-intro">Select a service below to start your booking.</p>
+
+  <div class="category"><h2>💅🏽 Nails</h2>
+    <div class="grid">
+      <article class="card"><span class="price">GH₵500</span><h3>BIAB — Natural Nails</h3><span class="duration">Approx. 2 hr 30 min</span><p>BIAB applied directly onto your natural nails without extensions for a durable, polished finish.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">GH₵600</span><h3>BIAB + Extensions</h3><span class="duration">Approx. 3 hr</span><p>BIAB with extensions for additional length, strength and a polished finish. Final price may vary with length and design.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">GH₵250</span><h3>Short Acrylic + French Tips</h3><span class="duration">Approx. 2 hr</span><p>Short acrylic extensions finished with classic French tips for a clean and timeless look.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">GH₵450</span><h3>Medium Acrylic + French Tips</h3><span class="duration">Approx. 2 hr 15 min</span><p>Medium acrylic extensions with French tips for an elegant, wearable length.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">GH₵480</span><h3>Long Acrylic + French Tips</h3><span class="duration">Approx. 2 hr 30 min</span><p>Long acrylic extensions finished with French tips for a bold yet elegant look.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">GH₵20–GH₵30+</span><h3>Extra Nail Design</h3><p>Additional charges apply depending on the complexity of the requested design.</p><a class="btn" href="#book">Add to booking</a></article>
+      <article class="card"><span class="price">GH₵100–GH₵200</span><h3>Custom Stick-On Nails</h3><p>Custom-made stick-on nails based on your preferred shape, length and design.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">GH₵85</span><h3>Soak-Off / Removal</h3><p>Removal of existing acrylic, BIAB or other nail enhancements before a new set. Arrive 30 minutes early.</p><a class="btn" href="#book">Add to booking</a></article>
+    </div>
+  </div>
+
+  <div class="category"><h2>🦶🏽 Pedicure</h2>
+    <div class="grid">
+      <article class="card"><span class="price">GH₵120</span><h3>Naked Pedicure</h3><p>A clean and refreshing pedicure without gel polish.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">GH₵180</span><h3>Pedicure + Gel Polish</h3><p>A complete pedicure finished with gel polish.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">GH₵300</span><h3>Pedicure + BIAB Toes</h3><p>A pedicure finished with BIAB on the toes for a durable, neat finish.</p><a class="btn" href="#book">Book this</a></article>
+    </div>
+  </div>
+
+  <div class="category"><h2>👁️ Lashes</h2>
+    <div class="grid">
+      <article class="card"><span class="price">GH₵180</span><h3>Classic Lashes</h3><p>Soft, natural-looking lash enhancement.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">GH₵200–GH₵250</span><h3>Hybrid Lashes</h3><p>A blend of classic and volume techniques for added definition. Price depends on volume.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">GH₵350</span><h3>Volume Lashes</h3><p>A fuller lash look with beautiful definition.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">GH₵450–GH₵550</span><h3>Custom Made Lashes</h3><p>A customized lash set created to suit your preferred look and volume.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">GH₵70</span><h3>Lash Removal</h3><p>Professional removal of an existing lash set.</p><a class="btn" href="#book">Book this</a></article>
+      <article class="card"><span class="price">Half price</span><h3>Lash Refill</h3><p>Refresh your existing lash set and restore its appearance. Refill is half the price of the selected lash set.</p><a class="btn" href="#book">Book this</a></article>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <div class="booking">
+    <div class="eyebrow">Reserve your appointment</div>
+    <h2>Book with Nailedit.GH</h2>
+    <p>Choose your service, appointment date and time, then pay securely. Your booking details will only be sent after a successful payment.</p>
+    
+<form class="form" action="https://formsubmit.co/elizabethadjetey6@gmail.com" method="POST">
+  <input type="hidden" name="_subject" value="New NailedIt.GH Booking Request">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_template" value="table">
+  <input type="hidden" id="paymentReference" name="Payment Reference" value="">
+  <input type="hidden" id="paymentStatus" name="Payment Status" value="">
+
+  <input id="bookName" name="Name" required placeholder="Full name">
+  <input id="bookPhone" name="Phone / WhatsApp" required type="tel" placeholder="Phone / WhatsApp">
+  <input id="bookEmail" name="Email" required type="email" placeholder="Email address">
+
+  <select id="bookService" name="Service" required>
+    <option value="">Choose a service</option>
+    <option>BIAB — GH₵500</option>
+    <option>BIAB + Extensions — GH₵600</option>
+    <option>Short Acrylic + French Tips — GH₵250</option>
+    <option>Medium Acrylic + French Tips — GH₵450</option>
+    <option>Long Acrylic + French Tips — GH₵480</option>
+    <option>Custom Stick-On Nails — GH₵100–GH₵200</option>
+    <option>Naked Pedicure — GH₵120</option>
+    <option>Pedicure + Gel Polish — GH₵180</option>
+    <option>Pedicure + BIAB Toes — GH₵300</option>
+    <option>Soak-Off / Removal — GH₵85</option>
+    <option>Classic Lashes — GH₵180</option>
+    <option>Hybrid Lashes — GH₵200–GH₵250</option>
+    <option>Volume Lashes — GH₵350</option>
+    <option>Custom Made Lashes — GH₵450–GH₵550</option>
+    <option>Lash Refill — Half price of selected lash set</option>
+    <option>Lash Removal — GH₵70</option>
+  </select>
+
+  <select id="stickOnPrice" name="Custom Stick-On Nail Price" style="display:none;">
+    <option value="">Choose Custom Stick-On Nail price</option>
+    <option value="100">GH₵100</option>
+    <option value="150">GH₵150</option>
+    <option value="200">GH₵200</option>
+  </select>
+
+  <input id="bookDate" name="Date" required type="date">
+  <input id="bookTime" name="Time" required type="time">
+  <input name="Extra notes / design request" class="full" placeholder="Extra notes / design request (optional)">
+
+  <button id="payAndConfirmButton" class="btn full" type="submit">Pay & Confirm Appointment</button>
+  <div class="full" id="paymentMessage" style="font-size:13px;color:#d8d2c8;text-align:center;">Payment is required before your appointment details are sent.</div>
+</form>
+
+    <div class="notice" id="confirmation"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <strong>Nailedit.GH</strong><br>
+  Nails • Lashes • Beauty<br><br>
+  WhatsApp / Call: 0552518871
+</footer>
+
+
+<script>
+(function(){
+  const form = document.querySelector('#book form.form');
+  if(!form) return;
+
+  const button = document.getElementById('payAndConfirmButton');
+  const message = document.getElementById('paymentMessage');
+  const referenceInput = document.getElementById('paymentReference');
+  const statusInput = document.getElementById('paymentStatus');
+  const serviceSelect = document.getElementById('bookService');
+  const stickOnPriceSelect = document.getElementById('stickOnPrice');
+
+  function updateStickOnPriceVisibility(){
+    const isStickOn = serviceSelect.value === 'Custom Stick-On Nails — GH₵100–GH₵200';
+    stickOnPriceSelect.style.display = isStickOn ? '' : 'none';
+    stickOnPriceSelect.required = isStickOn;
+    if(!isStickOn) stickOnPriceSelect.value = '';
+  }
+
+  serviceSelect.addEventListener('change', updateStickOnPriceVisibility);
+  updateStickOnPriceVisibility();
+
+  const fixedPrices = {
+    'BIAB — GH₵500':500,
+    'BIAB + Extensions — GH₵600':600,
+    'Short Acrylic + French Tips — GH₵250':250,
+    'Medium Acrylic + French Tips — GH₵450':450,
+    'Long Acrylic + French Tips — GH₵480':480,
+    'Naked Pedicure — GH₵120':120,
+    'Pedicure + Gel Polish — GH₵180':180,
+    'Pedicure + BIAB Toes — GH₵300':300,
+    'Soak-Off / Removal — GH₵85':85,
+    'Classic Lashes — GH₵180':180,
+    'Volume Lashes — GH₵350':350,
+    'Lash Removal — GH₵70':70
+  };
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    if(!form.reportValidity()) return;
+
+    const email = document.getElementById('bookEmail').value.trim();
+    const service = document.getElementById('bookService').value;
+    const name = document.getElementById('bookName').value.trim();
+    const phone = document.getElementById('bookPhone').value.trim();
+    const date = document.getElementById('bookDate').value;
+    const time = document.getElementById('bookTime').value;
+
+    let price = fixedPrices[service];
+    if(service === 'Custom Stick-On Nails — GH₵100–GH₵200'){
+      price = Number(stickOnPriceSelect.value);
+      if(!price){
+        message.textContent = 'Please choose GH₵100, GH₵150 or GH₵200 for your Custom Stick-On Nails before payment.';
+        alert('Please choose a Custom Stick-On Nail price before payment.');
+        return;
+      }
+    }
+
+    if(!price){
+      message.textContent = 'This service has a variable price. Please contact NailedIt.GH first so the final amount can be confirmed before payment.';
+      alert('This service has a variable price. Please contact NailedIt.GH first so the final amount can be confirmed before payment.');
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Opening secure payment…';
+    message.textContent = 'Complete your Paystack payment to confirm your appointment.';
+
+    const popup = new PaystackPop();
+    popup.newTransaction({
+      key: PAYSTACK_PUBLIC_KEY,
+      email: email,
+      amount: price * 100,
+      currency: 'GHS',
+      metadata: {custom_fields:[
+        {display_name:'Client Name', variable_name:'client_name', value:name},
+        {display_name:'Phone', variable_name:'phone', value:phone},
+        {display_name:'Service', variable_name:'service', value:service},
+        {display_name:'Selected Price', variable_name:'selected_price', value:'GH₵' + price},
+        {display_name:'Appointment Date', variable_name:'appointment_date', value:date},
+        {display_name:'Appointment Time', variable_name:'appointment_time', value:time}
+      ]},
+      onSuccess: function(tx){
+        referenceInput.value = tx.reference || '';
+        statusInput.value = 'Paid';
+        message.textContent = 'Payment successful. Confirming your appointment now…';
+        button.textContent = 'Payment Successful ✓';
+        HTMLFormElement.prototype.submit.call(form);
+      },
+      onCancel: function(){
+        button.disabled = false;
+        button.textContent = 'Pay & Confirm Appointment';
+        message.textContent = 'Payment was not completed, so the appointment was not confirmed.';
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
