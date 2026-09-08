@@ -188,7 +188,8 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
   const stickOnPriceSelect = document.getElementById('stickOnPrice');
   const extraDesignPriceSelect = document.getElementById('extraDesignPrice');
 function updateExtraDesignPriceVisibility(){
-  const isExtraDesign = serviceSelect.value.startsWith('Extra Nail Design');
+const isExtraDesign =
+serviceSelect.value.includes('Acrylic + French Tips');
   extraDesignPriceSelect.style.display = isExtraDesign ? '' : 'none';
   extraDesignPriceSelect.required = isExtraDesign;
   if(!isExtraDesign) extraDesignPriceSelect.value = '';
