@@ -127,6 +127,7 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
     <option>Short Acrylic + French Tips — GH₵250</option>
     <option>Medium Acrylic + French Tips — GH₵450</option>
     <option>Long Acrylic + French Tips — GH₵480</option>
+    <option>Extra Nail Design — GH₵20–GH₵30</option>
     <option>Custom Stick-On Nails — GH₵100–GH₵200</option>
     <option>Naked Pedicure — GH₵120</option>
     <option>Pedicure + Gel Polish — GH₵180</option>
@@ -146,12 +147,19 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
     <option value="150">GH₵150</option>
     <option value="200">GH₵200</option>
   </select>
+  <select id="extraDesignPrice" name="Extra Nail Design Price" style="display:none;">
+  <option value="">Choose Extra Nail Design price</option>
+  <option value="20">GH₵20</option>
+  <option value="30">GH₵30</option>
+</select>
 
   <input id="bookDate" name="Date" required type="date">
   <input id="bookTime" name="Time" required type="time">
   <input name="Extra notes / design request" class="full" placeholder="Extra notes / design request (optional)">
 
   <button id="payAndConfirmButton" class="btn full" type="submit">Pay & Confirm Appointment</button>
+  <button type="button" class="btn full" onclick="submitWithoutPayment()">Submit Appointment Without Payment</button>
+  
   <div class="full" id="paymentMessage" style="font-size:13px;color:#d8d2c8;text-align:center;">Payment is required before your appointment details are sent.</div>
 </form>
 
@@ -178,7 +186,13 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
   const statusInput = document.getElementById('paymentStatus');
   const serviceSelect = document.getElementById('bookService');
   const stickOnPriceSelect = document.getElementById('stickOnPrice');
-
+  const extraDesignPriceSelect = document.getElementById('extraDesignPrice');
+function updateExtraDesignPriceVisibility(){
+  const isExtraDesign = serviceSelect.value === 'Extra Nail Design – GH₵20–GH₵30';
+  extraDesignPriceSelect.style.display = isExtraDesign ? '' : 'none';
+  extraDesignPriceSelect.required = isExtraDesign;
+  if(!isExtraDesign) extraDesignPriceSelect.value = '';
+}
   function updateStickOnPriceVisibility(){
     const isStickOn = serviceSelect.value === 'Custom Stick-On Nails — GH₵100–GH₵200';
     stickOnPriceSelect.style.display = isStickOn ? '' : 'none';
@@ -188,6 +202,9 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
 
   serviceSelect.addEventListener('change', updateStickOnPriceVisibility);
   updateStickOnPriceVisibility();
+
+  serviceSelect.addEventListener('change', updateExtraDesignPriceVisibility);
+updateExtraDesignPriceVisibility();
 
   const fixedPrices = {
     'BIAB — GH₵500':500,
@@ -217,6 +234,14 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
     const time = document.getElementById('bookTime').value;
 
     let price = fixedPrices[service];
+    if(service === 'Extra Nail Design – GH₵20–GH₵30'){
+  price = Number(extraDesignPriceSelect.value);
+  if(!price){
+    message.textContent = 'Please choose GH₵20 or GH₵30 for Extra Nail Design.';
+    alert('Please choose an Extra Nail Design price before payment.');
+    return;
+  }
+}
     if(service === 'Custom Stick-On Nails — GH₵100–GH₵200'){
       price = Number(stickOnPriceSelect.value);
       if(!price){
@@ -265,6 +290,21 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
     });
   });
 })();
+</script>
+  <script>
+function submitWithoutPayment() {
+  const form = document.querySelector('#book form');
+
+  if (!form.reportValidity()) return;
+
+  const statusInput = document.getElementById('paymentStatus');
+  const referenceInput = document.getElementById('paymentReference');
+
+  if (statusInput) statusInput.value = 'Not Paid';
+  if (referenceInput) referenceInput.value = 'No payment made';
+
+  HTMLFormElement.prototype.submit.call(form);
+}
 </script>
 
 </body>
