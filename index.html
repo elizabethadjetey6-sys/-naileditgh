@@ -281,7 +281,20 @@ updateExtraDesignPriceVisibility();
         statusInput.value = 'Paid';
         message.textContent = 'Payment successful. Confirming your appointment now…';
         button.textContent = 'Payment Successful ✓';
+       fetch('/api/send-confirmation', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    email: email,
+    name: name,
+    service: service,
+    date: date,
+    time: time,
+    reference: tx.reference
+  })
+});
         HTMLFormElement.prototype.submit.call(form);
+        
       },
       onCancel: function(){
         button.disabled = false;
