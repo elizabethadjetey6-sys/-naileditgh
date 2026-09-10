@@ -189,7 +189,7 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
   const extraDesignPriceSelect = document.getElementById('extraDesignPrice');
 function updateExtraDesignPriceVisibility(){
 const isExtraDesign =
-serviceSelect.value.includes('Acrylic + French Tips');
+serviceSelect.value.includes('Acrylic') && serviceSelect.value.includes('French Tips');
   extraDesignPriceSelect.style.display = isExtraDesign ? '' : 'none';
   extraDesignPriceSelect.required = isExtraDesign;
   if(!isExtraDesign) extraDesignPriceSelect.value = '';
