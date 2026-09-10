@@ -22,6 +22,7 @@ section{padding:65px 7%;max-width:1200px;margin:auto}h2{font:normal 38px Georgia
 footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
 .notice{margin-top:20px;font-size:13px;color:#d8d2c8}
 .status-error{color:#ffb4b4!important}.status-success{color:#b8efc5!important}
+.btn-secondary{background:transparent;border:1px solid #d8d2c8;color:#fff;margin-top:2px}
 @media(max-width:700px){nav{display:none}h1{font-size:43px}.grid,.form{grid-template-columns:1fr}.form .full{grid-column:auto}section{padding:45px 5%}.hero{padding:65px 5%}.policy,.booking{padding:25px}}
 </style>
 
@@ -111,10 +112,10 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
     <p>Choose your service, appointment date and time, then pay securely. Your booking details will only be sent after a successful payment.</p>
     
 <form class="form" action="https://formsubmit.co/elizabethadjetey6@gmail.com" method="POST">
-  <input type="hidden" name="_subject" value="New NailedIt.GH Booking Request">
+  <input type="hidden" id="emailSubject" name="_subject" value="New NailedIt.GH Booking Request">
   <input type="hidden" name="_captcha" value="false">
   <input type="hidden" name="_template" value="table">
-  <input type="hidden" name="_autoresponse" value="Thank you for booking with NailedIt.GH. Your payment was received and your appointment request has been recorded. Please keep your payment reference. We will contact you if any clarification is needed.">
+  <input type="hidden" id="autoResponse" name="_autoresponse" value="Thank you for booking with NailedIt.GH. Your payment was received and your appointment request has been recorded. Please keep your payment reference. We will contact you if any clarification is needed.">
   <input type="hidden" id="paymentReference" name="Payment Reference" value="">
   <input type="hidden" id="paymentStatus" name="Payment Status" value="">
 
@@ -161,7 +162,8 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
   <input name="Extra notes / design request" class="full" placeholder="Extra notes / design request (optional)">
 
   <button id="payAndConfirmButton" class="btn full" type="submit">Pay & Confirm Appointment</button>
-  <div class="full" id="paymentMessage" style="font-size:13px;color:#d8d2c8;text-align:center;">Payment is required before your appointment details are sent.</div>
+  <button id="submitWithoutPayingButton" class="btn btn-secondary full" type="button">Submit Appointment Without Paying</button>
+  <div class="full" id="paymentMessage" style="font-size:13px;color:#d8d2c8;text-align:center;">Pay securely now, or submit an unpaid appointment request if you cannot use Paystack.</div>
 </form>
 
     <div class="notice" id="confirmation"></div>
@@ -182,13 +184,49 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
   if(!form) return;
 
   const button = document.getElementById('payAndConfirmButton');
+  const unpaidButton = document.getElementById('submitWithoutPayingButton');
   const message = document.getElementById('paymentMessage');
   const referenceInput = document.getElementById('paymentReference');
   const statusInput = document.getElementById('paymentStatus');
+  const subjectInput = document.getElementById('emailSubject');
+  const autoResponseInput = document.getElementById('autoResponse');
   const dateInput = document.getElementById('bookDate');
+  const timeInput = document.getElementById('bookTime');
   const extraDesignInput = document.getElementById('bookExtraDesign');
+  const manuallyBlockedSlots = new Set([
+    '2026-09-12|14:30',
+    '2026-09-26|10:30'
+  ]);
 
   dateInput.min = new Date().toISOString().split('T')[0];
+
+  function rejectBlockedTime(){
+    if(manuallyBlockedSlots.has(dateInput.value + '|' + timeInput.value)){
+      timeInput.value = '';
+      message.className = 'full status-error';
+      message.textContent = 'That time is already booked. Please select another time.';
+      alert('That time is already booked. Please select another time.');
+      return true;
+    }
+    return false;
+  }
+
+  dateInput.addEventListener('change', rejectBlockedTime);
+  timeInput.addEventListener('change', rejectBlockedTime);
+
+  unpaidButton.addEventListener('click', function(){
+    if(!form.reportValidity() || rejectBlockedTime()) return;
+    referenceInput.value = 'Not applicable';
+    statusInput.value = 'Not Paid';
+    subjectInput.value = 'New NailedIt.GH Unpaid Booking Request';
+    autoResponseInput.value = 'Thank you. NailedIt.GH has received your unpaid appointment request. Your request is marked Not Paid and is not confirmed until NailedIt.GH contacts you. Please keep an eye on your phone or email.';
+    unpaidButton.disabled = true;
+    button.disabled = true;
+    unpaidButton.textContent = 'Submitting appointment…';
+    message.className = 'full';
+    message.textContent = 'Sending your unpaid appointment request.';
+    HTMLFormElement.prototype.submit.call(form);
+  });
 
   const fixedPrices = {
     'BIAB — GH₵500':500,
@@ -225,7 +263,11 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
       body:JSON.stringify(payload)
     });
     const data = await response.json().catch(function(){ return {}; });
-    if(!response.ok) throw new Error(data.error || 'Unable to check appointment availability.');
+    if(!response.ok){
+      const error = new Error(data.error || 'Unable to check appointment availability.');
+      error.status = response.status;
+      throw error;
+    }
     return data;
   }
 
@@ -239,10 +281,16 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
     const name = document.getElementById('bookName').value.trim();
     const phone = document.getElementById('bookPhone').value.trim();
     const date = document.getElementById('bookDate').value;
-    const time = document.getElementById('bookTime').value;
+    const time = timeInput.value;
     const basePrice = fixedPrices[service];
     const extraDesignPrice = Number(extraDesignInput.value || 0);
     const price = basePrice ? basePrice + extraDesignPrice : 0;
+
+    if(manuallyBlockedSlots.has(date + '|' + time)){
+      message.className = 'full status-error';
+      message.textContent = 'That time is already booked. Please select another time.';
+      return;
+    }
 
     if(!price){
       message.textContent = 'This service has a variable price. Please contact NailedIt.GH first so the final amount can be confirmed before payment.';
@@ -251,6 +299,9 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
     }
 
     button.disabled = true;
+    unpaidButton.disabled = true;
+    subjectInput.value = 'New NailedIt.GH Paid Booking';
+    autoResponseInput.value = 'Thank you for booking with NailedIt.GH. Your payment was received and your appointment request has been recorded. Please keep your payment reference. We will contact you if any clarification is needed.';
     button.textContent = 'Checking time…';
     message.className = 'full';
     message.textContent = 'Checking whether your selected time is available.';
@@ -260,11 +311,15 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
       const hold = await slotRequest({action:'hold', date:date, time:time, name:name, phone:phone, service:service});
       holdToken = hold.token;
     }catch(error){
-      button.disabled = false;
-      button.textContent = 'Pay & Confirm Appointment';
-      message.className = 'full status-error';
-      message.textContent = error.message || 'That time is already booked. Please select another time.';
-      return;
+      if(error.status === 409){
+        button.disabled = false;
+        unpaidButton.disabled = false;
+        button.textContent = 'Pay & Confirm Appointment';
+        message.className = 'full status-error';
+        message.textContent = error.message || 'That time is already booked. Please select another time.';
+        return;
+      }
+      holdToken = '';
     }
 
     button.textContent = 'Opening secure payment…';
@@ -289,18 +344,21 @@ footer{text-align:center;padding:45px 7%;border-top:1px solid var(--line);color:
         statusInput.value = 'Paid';
         message.textContent = 'Payment successful. Confirming your appointment now…';
         button.textContent = 'Payment Successful ✓';
-        try{
-          await slotRequest({action:'confirm', token:holdToken, date:date, time:time, name:name, phone:phone, email:email, service:service, extraDesign:extraDesignPrice, amount:price, paymentReference:tx.reference || ''});
-          message.className = 'full status-success';
-        }catch(error){
-          message.className = 'full status-error';
-          message.textContent = 'Your payment succeeded, but the booking record needs attention. Please WhatsApp 0552518871 with reference ' + (tx.reference || '') + '.';
+        if(holdToken){
+          try{
+            await slotRequest({action:'confirm', token:holdToken, date:date, time:time, name:name, phone:phone, email:email, service:service, extraDesign:extraDesignPrice, amount:price, paymentReference:tx.reference || ''});
+            message.className = 'full status-success';
+          }catch(error){
+            message.className = 'full status-error';
+            message.textContent = 'Your payment succeeded, but the booking record needs attention. Please WhatsApp 0552518871 with reference ' + (tx.reference || '') + '.';
+          }
         }
         HTMLFormElement.prototype.submit.call(form);
       },
       onCancel: async function(){
-        try{ await slotRequest({action:'release', token:holdToken, date:date, time:time}); }catch(error){}
+        if(holdToken){ try{ await slotRequest({action:'release', token:holdToken, date:date, time:time}); }catch(error){} }
         button.disabled = false;
+        unpaidButton.disabled = false;
         button.textContent = 'Pay & Confirm Appointment';
         message.className = 'full status-error';
         message.textContent = 'Payment was not completed, so the appointment was not confirmed.';
