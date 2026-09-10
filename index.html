@@ -211,7 +211,7 @@ updateExtraDesignPriceVisibility();
     'BIAB — GH₵500':500,
     'BIAB + Extensions — GH₵600':600,
     'Short Acrylic + French Tips — GH₵250':250,
-    'Medium Acrylic + French Tips — GH₵450':450,m
+    'Medium Acrylic + French Tips — GH₵450':450,
     'Long Acrylic + French Tips — GH₵480':480,
     'Naked Pedicure — GH₵120':120,
     'Pedicure + Gel Polish — GH₵180':180,
@@ -222,7 +222,7 @@ updateExtraDesignPriceVisibility();
     'Lash Removal — GH₵70':70
   };
 
-  form.addEventListener('submit',async  function(e){
+  form.addEventListener('submit', function(e){
     e.preventDefault();
 
     if(!form.reportValidity()) return;
@@ -233,18 +233,6 @@ updateExtraDesignPriceVisibility();
     const phone = document.getElementById('bookPhone').value.trim();
     const date = document.getElementById('bookDate').value;
     const time = document.getElementById('bookTime').value;
-
-    const bookingCheck = await fetch('/api/bookings');
-const bookingData = await bookingCheck.json();
-
-    const alreadyBooked = bookingData.bookings.some(
-  booking => booking.date === date && booking.time === time
-);
-
-   if (alreadyBooked) {
-  alert('Sorry, this appointment time has already been booked. Please choose another time.');
-  return;
-} 
 
     let price = fixedPrices[service];
     if(service === 'Extra Nail Design – GH₵20–GH₵30'){
@@ -293,12 +281,7 @@ const bookingData = await bookingCheck.json();
         statusInput.value = 'Paid';
         message.textContent = 'Payment successful. Confirming your appointment now…';
         button.textContent = 'Payment Successful ✓';
-     fetch('/api/bookings', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ date: date, time: time })
-});
-        fetch('/api/send-confirmation', {
+       fetch('/api/send-confirmation', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
